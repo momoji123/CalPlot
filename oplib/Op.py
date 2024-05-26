@@ -10,12 +10,12 @@ class Operation:
             childOp = Operation(value, self, True)
             self.val.append(childOp)
             return childOp
-        if value is '(':
+        if value == '(':
             self.val.append(str(value))
             childOp = Operation(None, self, True)
             self.val.append(childOp)
             return childOp
-        if value is ')':
+        if value == ')':
             if self.parent is not None:
                 self.is_open = False
                 return self.parent
@@ -23,6 +23,7 @@ class Operation:
                 return self
         else:
             self.val.append(str(value))
+        return self
     
     def remove_val(self):
         if(len(self.val)<1):
@@ -50,24 +51,24 @@ class Operation:
         result = ""
         if self.innerOp in ['sin', 'cos', 'tan']:
             result = result + "math." + self.innerOp + "("
-            if trigon_mode is "Deg":
+            if trigon_mode == "Deg":
                 result = result + "math.radians("
         elif self.innerOp in ['log']:
             result = result + "math." + self.innerOp + "("
             
         for value in self.val:
             if isinstance(value, str):
-                if value is '^':
+                if value == '^':
                     result = result + "**"
-                elif value is 'e':
+                elif value == 'e':
                     result = result + "math.e"
                 else:
                     result = result + value
             else:
                 result = result + value.get_eval_str(trigon_mode)
         
-        if not self.is_open and self.innerOp is not "main":
-            if self.innerOp in ['sin', 'cos', 'tan'] and trigon_mode is "Deg":
+        if not self.is_open and self.innerOp != "main":
+            if self.innerOp in ['sin', 'cos', 'tan'] and trigon_mode == "Deg":
                 result = result + "))"
             else:
                 result = result + ")"
@@ -84,6 +85,6 @@ class Operation:
             else:
                 result = result + value.get_display_str()
         
-        if not self.is_open and self.innerOp is not "main":
+        if not self.is_open and self.innerOp != "main":
             result = result + ")"
         return result

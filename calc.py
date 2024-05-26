@@ -27,7 +27,7 @@ class Calculator:
         scrollbar_x.pack(side="bottom", fill="x")
         
         # Update main_window content when input_var changes
-        self.input_var.trace("w", lambda *args: self.main_window.config(state="normal", highlightthickness=0, wrap="none") or self.main_window.delete(1.0, "end") or self.main_window.insert("end", self.input_var.get()) or self.main_window.config(state="disabled", highlightthickness=0, wrap="none))
+        self.input_var.trace("w", lambda *args: self.main_window.config(state="normal", highlightthickness=0, wrap="none") or self.main_window.delete(1.0, "end") or self.main_window.insert("end", self.input_var.get()) or self.main_window.config(state="disabled", highlightthickness=0, wrap="none"))
         
         # Number area
         self.number_area = tk.Frame(self.master)
@@ -75,7 +75,7 @@ class Calculator:
     def create_number_buttons(self):
         for i in range(1,10):
             button = tk.Button(self.number_area, text=str(i), command=lambda num=str(i): self.add_to_input(num))
-            button.grid(row=(i-1//3, column=(i-1)%3, sticky="nsew")
+            button.grid(row=(i-1)//3, column=(i-1)%3, sticky="nsew")
         button_zero = tk.Button(self.number_area, text="0", command=lambda num="0": self.add_to_input(num))
         button_zero.grid(row=3, column=1, sticky="nsew")
         self.number_area.grid_rowconfigure(0, weight=1)
@@ -162,7 +162,7 @@ class Calculator:
     
     def switch_trigon_mode(self):
         curr_mode = self.trigon_mode
-        if curr_mode is "Rad":
+        if curr_mode == "Rad":
             self.trigon_mode = "Deg"
         else:
             self.trigon_mode = "Rad"
